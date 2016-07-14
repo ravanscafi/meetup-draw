@@ -1,13 +1,14 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "rscafi/meetup-draw",
+    "description": "Perform a draw to allow members to attend democratically.",
+    "keywords": ["meetup", "meetup.com", "draw", "raffle"],
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.0",
         "laravel/lumen-framework": "5.2.*",
-        "vlucas/phpdotenv": "~2.2"
+        "vlucas/phpdotenv": "~2.2",
+        "dms/meetup-api-client": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
