@@ -1,6 +1,6 @@
 {
     "name": "rscafi/meetup-draw",
-    "description": "Perform a draw to allow members to attend democratically.",
+    "description": "Hold a draw between Meetup members to allow a democratic event attendance",
     "keywords": ["meetup", "meetup.com", "draw", "raffle"],
     "license": "MIT",
     "type": "project",
