@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0",
+        "hhvm": ">=3.11",
         "laravel/lumen-framework": "5.2.*",
         "vlucas/phpdotenv": "~2.2",
         "dms/meetup-api-client": "^2.1"
