@@ -27,8 +27,9 @@ class Event
      *
      * @param int|string $eventId Desired Event
      *
-     * @return array An Event from Meetup
      * @throws EventNotFoundException
+     *
+     * @return array An Event from Meetup
      */
     public function get($eventId)
     {
