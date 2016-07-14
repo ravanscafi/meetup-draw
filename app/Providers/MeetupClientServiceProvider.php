@@ -9,8 +9,6 @@ class MeetupClientServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register()
     {
@@ -19,8 +17,6 @@ class MeetupClientServiceProvider extends ServiceProvider
 
     /**
      * Boot the meetup client for the application.
-     *
-     * @return void
      */
     public function boot()
     {

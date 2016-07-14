@@ -9,7 +9,7 @@ class DrawHolderTest extends TestCase
     public function testShouldDraw()
     {
         // Set
-        $holder = new DrawHolder;
+        $holder = new DrawHolder();
         $participants = [
             ['participant 1' => 'john doe'],
             ['participant 2' => 'jane doe'],
