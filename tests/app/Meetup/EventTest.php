@@ -93,7 +93,7 @@ class EventTest extends PHPUnit_Framework_TestCase
 
         $this->setExpectedException(
             MeetupErrorException::class,
-            "Error on Meetup API!"
+            'Error on Meetup API!'
         );
 
         // Actions
