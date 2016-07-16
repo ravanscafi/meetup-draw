@@ -2,9 +2,7 @@ language: php
 
 php:
   - 7.0
-  - hhvm
-
-dist: xenial
+  - hhvm-3.12
 
 sudo: false
 
