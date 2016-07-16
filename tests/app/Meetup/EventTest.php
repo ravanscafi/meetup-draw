@@ -3,8 +3,11 @@
 namespace App\Meetup;
 
 use App\Meetup\Exceptions\EventNotFoundException;
+use App\Meetup\Exceptions\MeetupErrorException;
 use ArrayIterator;
 use DMS\Service\Meetup\MeetupKeyAuthClient;
+use Guzzle\Http\Exception\ClientErrorResponseException;
+use Guzzle\Http\Exception\ServerErrorResponseException;
 use PHPUnit_Framework_TestCase;
 
 class EventTest extends PHPUnit_Framework_TestCase
@@ -32,7 +35,7 @@ class EventTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($meetupEvent, $result);
     }
 
-    public function testShouldNotGetEvent()
+    public function testShouldNotGetEventWhenResponseIsInvalid()
     {
         // Set
         $client = $this->getMock(MeetupKeyAuthClient::class, ['getEvents']);
@@ -47,6 +50,50 @@ class EventTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException(
             EventNotFoundException::class,
             "Event '123' not found!"
+        );
+
+        // Actions
+        $event->get($eventId);
+    }
+
+    public function testShouldNotGetEventWhenAClientExceptionIsThrown()
+    {
+        // Set
+        $client = $this->getMock(MeetupKeyAuthClient::class, ['getEvents']);
+        $event = new Event($client);
+        $eventId = '123';
+        $exception = new ClientErrorResponseException();
+
+        // Expectations
+        $client->method('getEvents')
+            ->with(['event_id' => $eventId])
+            ->willThrowException($exception);
+
+        $this->setExpectedException(
+            EventNotFoundException::class,
+            "Event '123' not found!"
+        );
+
+        // Actions
+        $event->get($eventId);
+    }
+
+    public function testShouldNotGetEventWhenAServerExceptionIsThrown()
+    {
+        // Set
+        $client = $this->getMock(MeetupKeyAuthClient::class, ['getEvents']);
+        $event = new Event($client);
+        $eventId = '123';
+        $exception = new ServerErrorResponseException();
+
+        // Expectations
+        $client->method('getEvents')
+            ->with(['event_id' => $eventId])
+            ->willThrowException($exception);
+
+        $this->setExpectedException(
+            MeetupErrorException::class,
+            "Error on Meetup API!"
         );
 
         // Actions

@@ -3,7 +3,11 @@
 namespace App\Meetup;
 
 use App\Meetup\Exceptions\EventNotFoundException;
+use App\Meetup\Exceptions\MeetupErrorException;
 use DMS\Service\Meetup\MeetupKeyAuthClient;
+use Exception;
+use Guzzle\Http\Exception\ClientErrorResponseException;
+use Guzzle\Http\Exception\ServerErrorResponseException;
 
 class Event
 {
@@ -28,15 +32,22 @@ class Event
      * @param int|string $eventId Desired Event
      *
      * @throws EventNotFoundException
+     * @throws MeetupErrorException
      *
      * @return array An Event from Meetup
      */
     public function get($eventId)
     {
-        $response = $this->client->getEvents(['event_id' => $eventId]);
+        try {
+            $response = $this->client->getEvents(['event_id' => $eventId]);
+        } catch (ClientErrorResponseException $e) {
+            $this->throwNotFound($eventId, $e);
+        } catch (ServerErrorResponseException $e) {
+            throw new MeetupErrorException('Error on Meetup API!', 0, $e);
+        }
 
         if (false === $response->valid()) {
-            throw new EventNotFoundException("Event '{$eventId}' not found!");
+            $this->throwNotFound($eventId);
         }
 
         return $response->current();
@@ -79,5 +90,16 @@ class Event
         });
 
         return array_values($participants);
+    }
+
+    /**
+     * @param int|string $eventId
+     * @param Exception  $previous
+     *
+     * @throws EventNotFoundException
+     */
+    protected function throwNotFound($eventId, Exception $previous = null)
+    {
+        throw new EventNotFoundException("Event '{$eventId}' not found!", 0, $previous);
     }
 }
