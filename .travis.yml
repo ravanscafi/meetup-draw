@@ -2,9 +2,11 @@ language: php
 
 php:
   - 7.0
-  - hhvm-3.12
+  - hhvm
 
-sudo: false
+sudo: required
+dist: xenial
+group: edge
 
 cache:
   directories:
