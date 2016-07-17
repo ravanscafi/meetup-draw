@@ -1,0 +1,13 @@
+version: '2'
+services:
+  nginx:
+    build: docker/nginx
+    ports: ["80:80"]
+    volumes_from: [fpm]
+    depends_on: [fpm,redis]
+  fpm:
+    build: docker/fpm
+    volumes:
+      - .:/var/www/html
+  redis:
+    image: redis:alpine
