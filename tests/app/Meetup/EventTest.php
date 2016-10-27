@@ -131,14 +131,16 @@ class EventTest extends PHPUnit_Framework_TestCase
         $event = new Event($client);
         $eventId = '123';
 
-        $participants = new ArrayIterator([
-            ['participant 1' => 'john doe', 'response' => 'yes'],
-            ['participant 2' => 'jane doe', 'response' => 'waitlist'],
-            ['participant 3' => 'jack doe', 'response' => 'waitlist'],
-            ['participant 4' => 'james doe', 'response' => 'no'],
-        ]);
+        $participants = new ArrayIterator(
+            [
+                1 => ['participant 1' => 'john doe', 'response' => 'yes'],
+                2 => ['participant 2' => 'jane doe', 'response' => 'waitlist'],
+                3 => ['participant 3' => 'jack doe', 'response' => 'waitlist'],
+                4 => ['participant 4' => 'james doe', 'response' => 'no'],
+            ]
+        );
 
-        $expected = [$participants[1], $participants[2]];
+        $expected = [$participants[2], $participants[3]];
 
         // Expectations
         $client->method('getRsvps')
